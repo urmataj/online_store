@@ -5,6 +5,10 @@ import com.example.online_store.entity.UserEntity;
 import com.example.online_store.exception.ApiException;
 import com.example.online_store.model.UserModel;
 import com.example.online_store.repository.UserRepository;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,6 +19,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 @Slf4j
@@ -35,8 +41,7 @@ public class UserService implements UserDetailsService {
                 userEntity.getId(),
                 userEntity.getUsername(),
                 userEntity.getPassword(),
-                userEntity.getName(),
-                userEntity.getCreatedAt()
+                userEntity.getName()
         );
     }
 
@@ -50,10 +55,11 @@ public class UserService implements UserDetailsService {
         try {
             userRepository.save(userEntity);
         } catch (DataIntegrityViolationException e) {
-            throw new ApiException("User " + signUpDto.getUsername() + " already exists", HttpStatusCode.valueOf(409));
+            throw new ApiException("User " + signUpDto.getUsername() + " is already exists", HttpStatusCode.valueOf(409));
         } catch (Exception e) {
             log.error("Error", e);
-            throw new ApiException("Error while creating user", HttpStatusCode.valueOf(400));
+            throw new ApiException("Error while user creating", HttpStatusCode.valueOf(400));
         }
     }
 }
+

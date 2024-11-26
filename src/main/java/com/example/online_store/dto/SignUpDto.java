@@ -12,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserSignUpDto {
+public class SignUpDto {
 
     @NotEmpty
     @Size(min = 6, max = 100)
@@ -23,8 +23,6 @@ public class UserSignUpDto {
     String password;
 
     @NotEmpty
-    String fullName;
+    String name;
 
-    @NotEmpty
-    String email;
 }

@@ -14,30 +14,26 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Обработчик для ApiException
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<ErrorDto> handleApiException(ApiException e) {
-        return ResponseEntity.status(e.getStatusCode())  // Код ошибки из ApiException
-                .body(new ErrorDto(e.getMessage(), e.getStatusCode().value())); // Сообщение и статус
+        return ResponseEntity.status(e.getStatusCode()).body(new ErrorDto(e.getMessage(), e.getStatusCode().value()));
     }
 
-    // Обработчик для MethodArgumentNotValidException (например, ошибки валидации)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorDto> handleNotValid(MethodArgumentNotValidException e) {
-        // Обрабатываем все ошибки валидации, получаем список полей и ошибок
-        String errorMessage = e.getBindingResult()
+
+        String errorMessage = e
+                .getBindingResult()
                 .getFieldErrors().stream()
                 .map(ex -> ex.getField() + ":" + ex.getDefaultMessage())
                 .collect(Collectors.joining(", "));
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST) // Используем 400 как статус
-                .body(new ErrorDto(errorMessage, HttpStatus.BAD_REQUEST.value())); // Возвращаем ошибки
+        return ResponseEntity.status(HttpStatus.CONFLICT.value()).body(new ErrorDto(errorMessage, HttpStatus.CONFLICT.value()));
     }
 
-    // Обработчик для AccessDeniedException (например, если у пользователя нет доступа)
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorDto> handleAccessDenied(AccessDeniedException e) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN.value())  // Статус 403
-                .body(new ErrorDto("Access Denied: You do not have permission", HttpStatus.FORBIDDEN.value()));  // Сообщение
+        return ResponseEntity.status(HttpStatus.FORBIDDEN.value()).body(new ErrorDto("Authentication is required", HttpStatus.FORBIDDEN.value()));
     }
+
 }

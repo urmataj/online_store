@@ -20,8 +20,10 @@ public class AuthController {
     private UserService userService;
 
     @PostMapping("/sign-up")
-    public SuccessDto signUp(@Valid @RequestBody SignUpDto signUpDto) {
+    public SuccessDto signUp(@Valid @RequestBody SignUpDto signUpDto){
         userService.saveUser(signUpDto);
         return SuccessDto.builder().success(true).build();
     }
+
 }
+

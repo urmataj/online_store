@@ -1,17 +1,15 @@
 package com.example.online_store.exception;
 
-import org.springframework.http.HttpStatus;
+import lombok.Getter;
+import org.springframework.http.HttpStatusCode;
 
+@Getter
 public class ApiException extends RuntimeException {
 
-    private final HttpStatus statusCode;
+    private final HttpStatusCode statusCode;
 
-    public ApiException(String message, HttpStatus statusCode) {
+    public ApiException(String message, HttpStatusCode code) {
         super(message);
-        this.statusCode = statusCode;
-    }
-
-    public HttpStatus getStatusCode() {
-        return statusCode;
+        this.statusCode = code;
     }
 }

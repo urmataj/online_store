@@ -10,10 +10,10 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class OrderReturnDto {
+public class ProductOverDueDto {
 
-    Long userId;
+    boolean isOverdue;
 
-    Long orderId;
+    String overduePeriod;
 
 }

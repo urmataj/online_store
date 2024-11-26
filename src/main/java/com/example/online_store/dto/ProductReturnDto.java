@@ -10,16 +10,11 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ProductDto {
+public class ProductReturnDto {
 
-    Long id;
+    Long customerId;
 
-    String name;
+    Long productId;
 
-    String description;
-
-    Double price;
-
-    Integer stockQuantity;
 }
 

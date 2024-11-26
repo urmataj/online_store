@@ -6,31 +6,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Entity
-@Table(name = "products")
+@Table(name = "customers")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductEntity {
+public class CustomerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String fullName;
 
-    private String type;
+    private String phoneNumber;
 
-    private String seller;
-
-    private boolean available;
-
-    @ManyToOne
-    private CustomerEntity customer;
-
-    private LocalDateTime returnDate;
+    private int creditCardNumber;
 
 }

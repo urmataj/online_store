@@ -8,9 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class PasswordEncoderConfiguration {
 
-    // Создаём бины для BCryptPasswordEncoder
     @Bean
     public PasswordEncoder bCryptPassword() {
-        return new BCryptPasswordEncoder();  // Используем BCrypt для шифрования паролей
+        return new BCryptPasswordEncoder();
     }
+
 }

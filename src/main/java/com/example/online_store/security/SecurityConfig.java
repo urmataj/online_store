@@ -26,33 +26,31 @@ public class SecurityConfig {
     private PasswordEncoder bCryptPassword;
 
     private static final String[] AUTH_WHITELIST = {
-            "/trusted/**",           // Доступ без авторизации
-            "/api/auth/**",          // Авторизация, регистрация, восстановление пароля
-            "/api/products/**",      // Доступ к данным товаров
-            "/api/orders/**"         // Доступ к заказам
+            "/trusted/**"
     };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
 
-                .authorizeRequests(authorize -> authorize
-                        .requestMatchers(AUTH_WHITELIST).permitAll() // Разрешаем доступ к определённым URL
-                        .anyRequest().authenticated() // Для остальных запросов нужна авторизация
+                .authorizeHttpRequests((authorize) -> authorize
+//                        .requestMatchers(AUTH_WHITELIST).permitAll()
+//                        .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
-                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Stateless сессии, если не используем сессии на сервере
-                .authenticationProvider(authenticationProvider()) // Настройка аутентификации
-                .httpBasic(httpSecurityHttpBasicConfigurer ->
-                        httpSecurityHttpBasicConfigurer.realmName("ONLINE_STORE") // Для REST API Basic аутентификации
-                );
+                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider())
+                .httpBasic(httpSecurityHttpBasicConfigurer -> httpSecurityHttpBasicConfigurer.realmName("SMART_LIBRARY"));
 
         return http.build();
     }
 
     private AuthenticationProvider authenticationProvider() {
         final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userService); // Сервис для загрузки пользователей
-        authenticationProvider.setPasswordEncoder(bCryptPassword); // Шифрование паролей
+        authenticationProvider.setUserDetailsService(userService);
+        authenticationProvider.setPasswordEncoder(bCryptPassword);
         return authenticationProvider;
     }
+
 }
+

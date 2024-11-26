@@ -11,13 +11,13 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class OrderCheckOutDto {
+public class ProductCheckOut {
 
-    @NotNull(message = "userId is required")
-    Long userId;
+    @NotNull(message = "customerId is required")
+    Long customerId;
 
-    @NotNull(message = "orderId is required")
-    Long orderId;
+    @NotNull(message = "productId is required")
+    Long productId;
 
     @NotNull(message = "periodDays is required")
     Integer periodDays;
